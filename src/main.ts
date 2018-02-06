@@ -1,4 +1,4 @@
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { ValidationPipe, ParseIntPipe } from '@nestjs/common';
 import * as bodyParser from 'body-parser';
 
@@ -18,12 +18,12 @@ import { RoleGuard } from './core/role.guard';
 */
 async function bootstrap() {
 	const app = await NestFactory.create(ApplicationModule);
-
+	
 	// Adding global exception handler (add more filters separted with comma)
 	 app.useGlobalFilters(new UnauthorizedExceptionFilter());	 
 	 app.useGlobalPipes(new ValidationPipe());
 	 app.setGlobalPrefix('/api/v1');
-	 app.useGlobalGuards(new RoleGuard());
+	 app.useGlobalGuards(new RoleGuard(new Reflector()));
 	 //app.useGlobalInterceptors()
 	 
 	 app.use(bodyParser.json());

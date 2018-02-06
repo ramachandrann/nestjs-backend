@@ -16,7 +16,7 @@ export class ApplicationModule implements NestModule {
   
   configure(consumer: MiddlewaresConsumer): void {    
     consumer.apply([CorsMiddleware, AuthenticationMiddleware]).forRoutes(ProviderController);    
-
+    
     // consumer.apply(AuthenticationMiddleware).forRoutes(
     //   { path: '/**', method: RequestMethod.ALL }
     // );
